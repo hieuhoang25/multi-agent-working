@@ -17,3 +17,4 @@ Quy tắc code:
 Sau khi sửa xong:
 1. Chạy `mvn -q compile`. Có lỗi thì tự sửa đến khi compile thành công.
 2. Báo lại danh sách file đã thay đổi và tóm tắt ngắn. Không tự viết test (việc của `tester`).
+3. KHÔNG chạy `git commit`, `git push` hay đổi nhánh — việc git do agent chính lo.

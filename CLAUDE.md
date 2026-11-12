@@ -29,6 +29,20 @@ Khi người dùng yêu cầu tính năng mới hoặc thay đổi đáng kể:
 
 Với sửa nhỏ (đổi tên, sửa typo, 1–2 dòng) thì làm trực tiếp, không cần qua planner.
 
+## Quy trình Git (agent chính phụ trách, subagent KHÔNG tự commit/push)
+1. **Trước khi gọi `coder`**: đảm bảo working tree sạch (`git status`), cập nhật main (`git checkout main && git pull`), rồi tạo nhánh mới:
+   - Tính năng: `feature/<mo-ta-ngan>` (vd. `feature/soft-delete`)
+   - Sửa lỗi: `fix/<mo-ta-ngan>`
+   - Refactor/khác: `refactor/<...>`, `chore/<...>`
+   Không bao giờ code trực tiếp trên `main`.
+2. **Sau khi `reviewer` không còn 🔴 Critical và `tester` báo toàn bộ test pass**: commit theo Conventional Commits:
+   - `feat: ...`, `fix: ...`, `refactor: ...`, `test: ...`, `docs: ...`, `chore: ...`
+   - Dòng đầu ≤ 72 ký tự, tiếng Anh; thân commit liệt kê ngắn các thay đổi chính.
+   - Chia nhiều commit nếu có nhiều thay đổi độc lập (vd. code và test có thể chung, docs tách riêng).
+3. Không commit file trong `target/`, file bí mật hay `.env`.
+4. **Push**: chỉ push khi người dùng yêu cầu: `git push -u origin <ten-nhanh>`, sau đó đề xuất tạo Pull Request (dùng `gh pr create` nếu có) với mô tả gồm: mục tiêu, thay đổi chính, kết quả test.
+5. Không bao giờ `git push --force` lên `main`, không merge vào `main` khi chưa được người dùng đồng ý.
+
 ## Quy ước
 - Constructor injection, DTO là `record`, không trả entity ra ngoài controller.
 - HTTP status: 201 tạo mới (kèm header Location), 204 xóa, 400 validation, 404 không tìm thấy, 409 trùng.
